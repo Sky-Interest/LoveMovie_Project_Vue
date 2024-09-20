@@ -20,6 +20,10 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 分页组件 -->
+        <el-pagination :current-page="page" :total="total" :page-size="limit"
+            style="padding: 30px 0; text-align: center;" layout="total, prev, pager, next, jumper"
+            @current-change="fetchData" />
     </div>
 </template>
 
