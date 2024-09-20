@@ -1,5 +1,24 @@
 <template>
     <div class="app-container">
+
+        <!--查询表单-->
+        <div class="search-div">
+            <el-form label-width="70px" size="small">
+                <el-row>
+                    <el-col :span="24">
+                        <el-form-item label="角色名称">
+                            <el-input style="width: 100%" v-model="searchObj.roleName" placeholder="角色名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row style="display:flex">
+                    <el-button type="primary" icon="el-icon-search" size="mini" @click="fetchData()">搜索</el-button>
+                    <el-button icon="el-icon-refresh" size="mini" @click="resetData">重置</el-button>
+                </el-row>
+            </el-form>
+        </div>
+
+
         <!-- 表格 -->
         <el-table v-loading="listLoading" :data="list" stripe border style="width: 100%;margin-top: 10px;">
 
@@ -20,10 +39,12 @@
                 </template>
             </el-table-column>
         </el-table>
+
         <!-- 分页组件 -->
         <el-pagination :current-page="page" :total="total" :page-size="limit"
             style="padding: 30px 0; text-align: center;" layout="total, prev, pager, next, jumper"
             @current-change="fetchData" />
+
     </div>
 </template>
 
@@ -32,24 +53,34 @@ import api from '@/api/role/role.js'
 export default {
     data() {
         return {
+            // listLoading:true, //  加载中的提示语.....
             list: [],
             total: 0,
             page: 1,
             limit: 3,
-            searchObj: {}
+            searchObj: {
+
+            }
         }
     },
     created() {
-        this.fetchData(1);
+        this.fetchData();
     },
     methods: {
-        fetchData() {
-            // this.page = pageNum;
+        fetchData(pageNum = 1) {
+            this.page = pageNum;
             api.getPageList(this.page, this.limit, this.searchObj).then(response => {
                 // console.log(response);
+                // this.listLoading=false;
                 this.list = response.data.records;
                 this.total = response.data.total;
             })
+        },
+        resetData() {
+            // 清空表单
+            this.searchObj = {};
+            // 再次刷新列表数据
+            this.fetchData();
         }
     }
 }
