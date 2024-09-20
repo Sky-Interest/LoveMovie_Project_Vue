@@ -10,5 +10,13 @@ export default {
             method: 'get',
             params: searchObj
         })
-    }
+    },
+    // 删除
+    removeId(id) {
+        return request({
+            //  url: '/admin/system/role/'+page+"/"+limit,
+            url: `${BASE_URL}/removeRoleById/${id}`,
+            method: 'delete', // 提交方式
+        })
+    },
 }

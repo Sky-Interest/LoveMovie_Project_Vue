@@ -81,7 +81,26 @@ export default {
             this.searchObj = {};
             // 再次刷新列表数据
             this.fetchData();
-        }
+        },
+        // 删除操作
+        removeDataById(id) {
+            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            }).then(() => {
+                api.removeId(id)
+                    .then((response) => {
+                        // 提示
+                        this.$message({
+                            type: "success",
+                            message: "删除成功!",
+                        });
+                        // 刷新页面
+                        this.fetchData();
+                    });
+            });
+        },
     }
 }
 </script>
