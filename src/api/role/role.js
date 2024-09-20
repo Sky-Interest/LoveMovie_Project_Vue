@@ -19,11 +19,25 @@ export default {
             method: 'delete', // 提交方式
         })
     },
-    saveRole(role){
+    saveRole(role) {
         return request({
             url: `${BASE_URL}/addRole`,
             method: 'post', // 提交方式为 post
             data: role // 传递json 数据
+        })
+    },
+    // 根据id 去获取一个角色
+    getRoleById(id) {
+        return request({
+            url: `${BASE_URL}/findRoleById/${id}`,
+            method: 'get', // 提交方式
+        })
+    },
+    updateRole(role) {
+        return request({
+            url: `${BASE_URL}/updateRole`,
+            method: 'post', // 提交方式为 post
+            data: role
         })
     },
 }

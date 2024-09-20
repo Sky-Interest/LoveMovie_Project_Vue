@@ -153,8 +153,27 @@ export default {
                 })
         },
         updateRole() {
-
-        }
+            api.updateRole(this.sysRole)
+                .then(response => {
+                    this.$message({
+                        type: "success",
+                        message: "修改成功!",
+                    });
+                    // 关闭弹框
+                    this.dialogVisible = false;
+                    // 刷新数据
+                    this.fetchData();
+                })
+        },
+        edit(id) {
+            //1.弹框
+            this.dialogVisible = true;
+            //2.赋值
+            api.getRoleById(id)
+                .then(response => {
+                    this.sysRole = response.data;
+                })
+        },
     }
 }
 </script>
