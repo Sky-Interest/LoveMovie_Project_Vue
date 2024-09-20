@@ -19,4 +19,11 @@ export default {
             method: 'delete', // 提交方式
         })
     },
+    saveRole(role){
+        return request({
+            url: `${BASE_URL}/addRole`,
+            method: 'post', // 提交方式为 post
+            data: role // 传递json 数据
+        })
+    },
 }

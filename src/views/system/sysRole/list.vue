@@ -17,6 +17,10 @@
                 </el-row>
             </el-form>
         </div>
+        <!-- 工具条 -->
+        <div class="tools-div">
+            <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+        </div>
 
 
         <!-- 表格 -->
@@ -39,6 +43,21 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 对话框 -->
+        <el-dialog title="添加/修改" :visible.sync="dialogVisible" width="40%">
+            <el-form ref="dataForm" :model="sysRole" label-width="150px" size="small" style="padding-right: 40px;">
+                <el-form-item label="角色名称">
+                    <el-input v-model="sysRole.roleName" />
+                </el-form-item>
+                <el-form-item label="角色编码">
+                    <el-input v-model="sysRole.roleCode" />
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false" size="small" icon="el-icon-refresh-right">取 消</el-button>
+                <el-button type="primary" icon="el-icon-check" @click="saveOrUpdate()" size="small">确 定</el-button>
+            </span>
+        </el-dialog>
 
         <!-- 分页组件 -->
         <el-pagination :current-page="page" :total="total" :page-size="limit"
@@ -58,9 +77,9 @@ export default {
             total: 0,
             page: 1,
             limit: 3,
-            searchObj: {
-
-            }
+            searchObj: {},
+            dialogVisible: false,//默认隐藏弹框
+            sysRole: {}
         }
     },
     created() {
@@ -101,6 +120,41 @@ export default {
                     });
             });
         },
+        // 打开弹框
+        add() {
+            // 将 控制弹框的 属性设置为 true
+            this.dialogVisible = true;
+            // 清空表单
+            this.sysRole = {};
+        },
+        // 添加或者修改 具体功能
+        saveOrUpdate() {
+            if (this.sysRole.id != null) {
+                this.updateRole();
+            }
+            else {
+                this.addRole();
+            }
+        },
+        // 实现添加功能
+        addRole() {
+            api.saveRole(this.sysRole)
+                .then(response => {
+                    //给出提示框
+                    this.$message({
+                        type: "success",
+                        message: "添加角色成功!",
+                    });
+                    // 关闭添加弹框
+                    this.dialogVisible = false;
+                    // 再次刷新数据
+                    this.fetchData();
+
+                })
+        },
+        updateRole() {
+
+        }
     }
 }
 </script>
