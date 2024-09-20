@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const BASE_URL = '/admin/system/role';
+const BASE_URL = '/admin/system/sysRole';
 export default {
     // 列表 
     getPageList(page, limit, searchObj) {
