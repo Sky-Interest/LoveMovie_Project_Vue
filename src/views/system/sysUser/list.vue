@@ -1,7 +1,34 @@
 <template>
     <div class="app-container">
         <!--搜索条件查询-->
-
+        <div class="search-div">
+      <el-form label-width="70px" size="small">
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="关 键 字">
+              <el-input style="width: 95%" v-model="searchObj.keyword" placeholder="用户名/姓名/手机号码"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="操作时间">
+              <el-date-picker
+                v-model="createTimes"
+                type="datetimerange"
+                range-separator="至"
+                start-placeholder="开始时间"
+                end-placeholder="结束时间"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                style="margin-right: 10px;width: 100%;"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row style="display:flex">
+          <el-button type="primary" icon="el-icon-search" size="mini"  @click="fetchData()">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetData">重置</el-button>
+        </el-row>
+      </el-form>
+    </div>
         <!-- 列表 -->
         <el-table v-loading="listLoading" :data="list" stripe border style="width: 100%;margin-top: 10px;">
 
