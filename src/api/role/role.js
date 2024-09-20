@@ -40,4 +40,13 @@ export default {
             data: role
         })
     },
+    //批量 删除
+    bactchremoveId(ids) {
+        return request({
+            // url: `${BASE_URL}/deleteBatchRoleByIds`,
+            url: `${BASE_URL}/batchRemove`,
+            method: 'delete', // 提交方式
+            data: ids //传递的json格式
+        })
+    },
 }

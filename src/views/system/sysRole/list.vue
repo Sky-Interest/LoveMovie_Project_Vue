@@ -20,12 +20,19 @@
         <!-- 工具条 -->
         <div class="tools-div">
             <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+            <el-button class="btn-add" size="mini" @click="batchRemove()">批量删除</el-button>
         </div>
 
 
         <!-- 表格 -->
-        <el-table v-loading="listLoading" :data="list" stripe border style="width: 100%;margin-top: 10px;">
-
+        <el-table
+      v-loading="listLoading"
+      :data="list"
+      stripe
+      border
+      style="width: 100%; margin-top: 10px"
+      @selection-change="handleSelectionChange">
+      <el-table-column type="selection"/>
             <el-table-column label="序号" width="70" align="center">
                 <template slot-scope="scope">
                     {{ (page - 1) * limit + scope.$index + 1 }}
@@ -79,7 +86,8 @@ export default {
             limit: 3,
             searchObj: {},
             dialogVisible: false,//默认隐藏弹框
-            sysRole: {}
+            sysRole: {},
+            selectValueData: [],
         }
     },
     created() {
@@ -173,6 +181,42 @@ export default {
                 .then(response => {
                     this.sysRole = response.data;
                 })
+        },
+        handleSelectionChange(selectValue) {
+            // console.log(selectValue);
+            this.selectValueData = selectValue;
+        },
+        // 批量删除
+        batchRemove() {
+            // 判断是否有选中select
+            if (this.selectValueData.length == 0) {
+                this.$message.warning('请选择要删除的记录！')
+                return;
+            }
+            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            }).then(() => {
+                var ids = [];
+                for (var i = 0; i < this.selectValueData.length; i++) {
+                    var obj = this.selectValueData[i];
+                    // 获取id值
+                    var id = obj.id;
+                    // 将id放进到数组中
+                    ids.push(id);
+                }
+                api.bactchremoveId(ids)
+                    .then((response) => {
+                        // 提示
+                        this.$message({
+                            type: "success",
+                            message: "删除成功!",
+                        });
+                        // 刷新页面
+                        this.fetchData();
+                    });
+            });
         },
     }
 }
