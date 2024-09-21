@@ -25,14 +25,9 @@
 
 
         <!-- 表格 -->
-        <el-table
-      v-loading="listLoading"
-      :data="list"
-      stripe
-      border
-      style="width: 100%; margin-top: 10px"
-      @selection-change="handleSelectionChange">
-      <el-table-column type="selection"/>
+        <el-table v-loading="listLoading" :data="list" stripe border style="width: 100%; margin-top: 10px"
+            @selection-change="handleSelectionChange">
+            <el-table-column type="selection" />
             <el-table-column label="序号" width="70" align="center">
                 <template slot-scope="scope">
                     {{ (page - 1) * limit + scope.$index + 1 }}
@@ -47,6 +42,8 @@
                     <el-button type="primary" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改" />
                     <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeDataById(scope.row.id)"
                         title="删除" />
+                    <el-button type="warning" icon="el-icon-baseball" size="mini" @click="showAssignAuth(scope.row)"
+                        title="分配权限" />
                 </template>
             </el-table-column>
         </el-table>
@@ -218,6 +215,10 @@ export default {
                     });
             });
         },
+        // 分配权限
+        showAssignAuth(row) {
+            this.$router.push('/system/assignAuth?id=' + row.id + '&roleName=' + row.roleName);
+        }
     }
 }
 </script>

@@ -47,5 +47,21 @@ export default {
             method: "post",
             data: sysMenu
         })
+    },
+    // 查看角色权限列表
+    toAssign(roleId) {
+        return request({
+            url: `${BASE_URL}/toAssign/${roleId}`,
+            method: 'get'
+        })
+    },
+
+    //角色授权
+    doAssign(assginMenuVo) {
+        return request({
+            url: `${BASE_URL}/doAssign`,
+            method: "post",
+            data: assginMenuVo
+        })
     }
 }
