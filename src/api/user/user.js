@@ -49,5 +49,12 @@ export default {
             method: 'delete',
             data: ids
         })
-    }
+    },
+    // 更改用户状态
+    updateStatus(id, status) {
+        return request({
+            url: `${BASE_URL}/updateStatus/${id}/${status}`,
+            method: 'get'
+        })
+    },
 }

@@ -65,7 +65,7 @@
             <el-table-column prop="phone" label="手机" />
             <el-table-column label="状态" width="80">
                 <template slot-scope="scope">
-                    <el-switch v-model="scope.row.status" @change="switchStatus(scope.row)">
+                    <el-switch v-model="scope.row.status === 1" @change="switchStatus(scope.row)">
                     </el-switch>
                 </template>
             </el-table-column>
