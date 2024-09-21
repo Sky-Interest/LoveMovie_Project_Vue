@@ -12,6 +12,13 @@ export default {
             params: searchObj
         })
     },
+    // 根据id去得到一个用户 
+    getUserById(id) {
+        return request({
+            url: `${BASE_URL}/findUserById/${id}`,
+            method: 'get'
+        })
+    },
     // 添加用户
     saveUser(user) {
         return request({
@@ -20,11 +27,12 @@ export default {
             data: user
         })
     },
-    // 根据id去得到一个用户 
-    getUserById(id) {
+    // 修改用户
+    updateUser(user) {
         return request({
-            url: `${BASE_URL}/findUserById/${id}`,
-            method: 'get'
+            url: `${BASE_URL}/updateUser`,
+            method: 'post',
+            data: user
         })
     },
 }

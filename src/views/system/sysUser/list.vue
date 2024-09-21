@@ -157,7 +157,18 @@ export default {
         },
         //修改用户
         updateUser() {
-
+            api.updateUser(this.sysUser)
+                .then(response => {
+                    //a.提示
+                    this.$message({
+                        message: '修改用户成功',
+                        type: 'success'
+                    });
+                    //b.关闭弹框
+                    this.dialogVisible = false;
+                    //c.刷新数据列表
+                    this.fetchData();
+                })
         },
         //分页查询功能
         fetchData(page = 1) {
