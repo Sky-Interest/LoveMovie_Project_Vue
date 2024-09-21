@@ -118,7 +118,13 @@ export default {
             })
         },
         edit(id) {
-
+            //a.根据id去得到当前用户 
+            api.getUserById(id).then(response => {
+                //b.将数据赋值给 sysUser
+                this.sysUser = response.data;
+                //c.打开弹框
+                this.dialogVisible = true;
+            })
         },
         add() {
             //1.将弹框设置为true

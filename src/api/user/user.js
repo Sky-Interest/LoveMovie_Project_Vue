@@ -20,4 +20,11 @@ export default {
             data: user
         })
     },
+    // 根据id去得到一个用户 
+    getUserById(id) {
+        return request({
+            url: `${BASE_URL}/findUserById/${id}`,
+            method: 'get'
+        })
+    },
 }
