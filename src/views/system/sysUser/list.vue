@@ -27,6 +27,7 @@
         <!-- 工具条 -->
         <div class="tools-div">
             <el-button type="success" icon="el-icon-plus" size="mini" @click="add">添 加</el-button>
+            <el-button class="btn-add" size="mini" @click="$event => batchRemove()">批量删除</el-button>
         </div>
         <!--添加/修改弹框-->
         <el-dialog title="添加/修改" :visible.sync="dialogVisible" width="40%">
@@ -50,8 +51,9 @@
             </span>
         </el-dialog>
         <!-- 列表 -->
-        <el-table v-loading="listLoading" :data="list" stripe border style="width: 100%;margin-top: 10px;">
-
+        <el-table v-loading="listLoading" :data="list" stripe border style="width: 100%;margin-top: 10px ;"
+            @selection-change="handleSelectionChange">
+            <el-table-column type="selection" />
             <el-table-column label="序号" width="70" align="center">
                 <template slot-scope="scope">
                     {{ (page - 1) * limit + scope.$index + 1 }}
@@ -180,12 +182,46 @@ export default {
                 api.removeUserById(id).then(response => {
                     //a.提示
                     this.$message({
-                        type:'success',
-                        message:'删除成功',
+                        type: 'success',
+                        message: '删除成功',
                     });
                     this.fetchData();
                 })
             })
+        },
+        // 批量删除用户
+        batchRemove() {
+            // 判断是否有选中select
+            if (this.selectValueData.length == 0) {
+                this.$message.warning('请选择要删除的记录！')
+                return;
+            }
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                var ids = [];
+                for (var i = 0; i < this.selectValueData.length; i++) {
+                    var obj = this.selectValueData[i];
+                    // 获取id值
+                    var id = obj.id;
+                    // 将id放进到数组中
+                    ids.push(id);
+                }
+                api.batchRemoveUser(ids).then(response => {
+                    //a.提示
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    });
+                    this.fetchData();
+                })
+            })
+        },
+        handleSelectionChange(selectValue) {
+            // console.log(selectValue);
+            this.selectValueData = selectValue;
         },
         //分页查询功能
         fetchData(page = 1) {

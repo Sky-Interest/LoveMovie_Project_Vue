@@ -42,4 +42,12 @@ export default {
             method: 'delete'
         })
     },
+    // 批量删除用户
+    batchRemoveUser(ids) {
+        return request({
+            url: `${BASE_URL}/removeBatchUserByIds`,
+            method: 'delete',
+            data: ids
+        })
+    }
 }
