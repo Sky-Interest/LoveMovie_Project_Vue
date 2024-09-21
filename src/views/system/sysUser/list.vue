@@ -170,6 +170,23 @@ export default {
                     this.fetchData();
                 })
         },
+        // 删除用户
+        removeDataById(id) {
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                api.removeUserById(id).then(response => {
+                    //a.提示
+                    this.$message({
+                        type:'success',
+                        message:'删除成功',
+                    });
+                    this.fetchData();
+                })
+            })
+        },
         //分页查询功能
         fetchData(page = 1) {
             this.page = page;

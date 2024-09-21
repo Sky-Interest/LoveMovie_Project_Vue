@@ -35,4 +35,11 @@ export default {
             data: user
         })
     },
+    // 删除用户
+    removeUserById(id) {
+        return request({
+            url: `${BASE_URL}/removeUserById/${id}`,
+            method: 'delete'
+        })
+    },
 }
