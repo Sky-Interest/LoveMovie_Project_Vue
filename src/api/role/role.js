@@ -50,18 +50,18 @@ export default {
         })
     },
     // 根据用户id查询用户已分配的角色
-    getRolesByUserId(userId){
+    getRolesByUserId(userId) {
         return request({
-            url:`${BASE_URL}/toAssign/${userId}`,
-            method:'get'
+            url: `${BASE_URL}/toAssign/${userId}`,
+            method: 'get'
         })
     },
     //分配角色
     assignRoles(assginRoleVo) {
         return request({
-          url: `${BASE_URL}/doAssign`,
-          method: 'post',
-          data: assginRoleVo
+            url: `${BASE_URL}/doAssign`,
+            method: 'post',
+            data: assginRoleVo
         })
-      }
+    }
 }

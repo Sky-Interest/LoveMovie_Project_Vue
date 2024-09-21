@@ -97,12 +97,11 @@
 
             <el-table-column label="操作" align="center" fixed="right">
                 <template slot-scope="scope">
-                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)"
-                        title="修改" />
-                    <el-button type="danger" icon="el-icon-delete" size="mini"
-                        @click="removeDataById(scope.row.id)" title="删除" />
-                    <el-button type="warning" icon="el-icon-baseball" size="mini"
-                        @click="showAssignRole(scope.row)" title="分配角色" />
+                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="edit(scope.row.id)" title="修改" />
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeDataById(scope.row.id)"
+                        title="删除" />
+                    <el-button type="warning" icon="el-icon-baseball" size="mini" @click="showAssignRole(scope.row)"
+                        title="分配角色" />
                 </template>
             </el-table-column>
         </el-table>
@@ -314,17 +313,17 @@ export default {
         },
 
         //分配角色
-        assignRole () {
+        assignRole() {
             let assginRoleVo = {
-              userId: this.sysUser.id,
-              roleIdList: this.userRoleIds
+                userId: this.sysUser.id,
+                roleIdList: this.userRoleIds
             }
             roleApi.assignRoles(assginRoleVo).then(response => {
-              this.$message.success(response.message || '分配角色成功')
-              this.dialogRoleVisible = false
-              this.fetchData(this.page)
+                this.$message.success(response.message || '分配角色成功')
+                this.dialogRoleVisible = false
+                this.fetchData(this.page)
             })
-          },
+        },
         resetData() {
             // 1.清空条件搜索
             this.searchObj = {};
