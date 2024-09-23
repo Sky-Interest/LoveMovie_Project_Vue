@@ -57,4 +57,5 @@ export default {
             method: 'get'
         })
     },
+    
 }
