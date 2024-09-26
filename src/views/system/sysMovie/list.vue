@@ -86,23 +86,26 @@
             <el-table-column prop="cid" label="影视类型" :formatter="cidformatter" />
             <el-table-column prop="director" label="导演" width="160" />
 
-            <!-- <el-table-column prop="image" label="剧照">
-          <template slot-scope="scope">
-            {{scope.row.image}}
-            <viewer>
-              <img :src="scope.row.image" alt="" style="height: 80px" />
-            </viewer>
-          </template>
-        </el-table-column> -->
-
             <el-table-column prop="image" label="剧照">
+
+                <template slot-scope="scope">
+                    <viewer>
+                        <img :src="scope.row.image" alt="" style="height:80px ;">
+                    </viewer>
+
+                </template>
+
+
+            </el-table-column>
+
+            <!-- <el-table-column prop="image" label="剧照">
                 <template slot-scope="scope">
                     <viewer>
                         <img :src="scope.row.image" alt="" style="height: 80px" />
                     </viewer>
                 </template>
 
-            </el-table-column>
+            </el-table-column> -->
 
 
             <el-table-column label="操作" width="200" align="center">
@@ -120,7 +123,6 @@
         <el-pagination :current-page="page" :total="total" :page-size="limit"
             style="padding: 30px 0; text-align: center" layout="total, prev, pager, next, jumper"
             @current-change="fetchPageList" />
-
 
     </div>
 </template>
@@ -197,6 +199,7 @@ export default {
             api.getMovieById(id).then((response) => {
                 this.sysMovie = response.data;
             });
+            // window.location.reload();
         },
         //文件开始上传,开始屏幕遮罩
         handleBeforeUpload() {
@@ -204,14 +207,12 @@ export default {
         },
         //图片上传成功的钩子函数
         handleImageSuccess(res, file) {
-
-            console.log(res);  // 得到的是图片地址
-            console.log(file);  // 得到是一个对象  
+            console.log(res);  // The image URL
+            console.log(file);  // The file object
 
             this.loading = false;
             if (file.response != "") {
-                // this.sysMovie.image = file.response.data;
-                this.sysMovie.image = file.response.data;
+                this.sysMovie.image = file.response;  // Make sure this is assigned correctly
                 console.log(this.sysMovie.image);
 
                 this.$message({
@@ -219,6 +220,7 @@ export default {
                     message: "图片上传成功",
                     duration: 6000,
                 });
+                // window.location.reload();
             } else {
                 this.$message({
                     type: "info",
@@ -227,6 +229,7 @@ export default {
                 });
             }
         },
+
         handleVideoSuccess(res, file) {
             this.loading = false;
             if (file.response != "") {
@@ -239,6 +242,7 @@ export default {
                     message: "视频上传成功",
                     duration: 6000,
                 });
+                this.fetchPageList();
             } else {
                 this.$message({
                     type: "info",
@@ -254,6 +258,7 @@ export default {
             } else {
                 this.addMovie();
             }
+            window.location.reload();
         },
         addMovie() {
             api.addMovie(this.sysMovie).then((response) => {

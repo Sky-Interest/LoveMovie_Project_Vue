@@ -1,6 +1,9 @@
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+import Viewer from 'v-viewer'
+
+import 'viewerjs/dist/viewer.css'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -15,6 +18,10 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import hasBtnPermission from '@/utils/btn-permission'
+
+
+
+Vue.use(Viewer);
 
 /**
  * If you don't want to use mock-server
