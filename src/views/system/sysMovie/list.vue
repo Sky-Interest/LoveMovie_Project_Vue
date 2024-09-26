@@ -236,7 +236,9 @@ export default {
 
                 console.log(res);  // 得到的是 
 
-                this.sysMovie.playId = file.response.data;
+                this.sysMovie.playId = file.response;
+                console.log(this.sysMovie.url);
+                
                 this.$message({
                     type: "info",
                     message: "视频上传成功",
